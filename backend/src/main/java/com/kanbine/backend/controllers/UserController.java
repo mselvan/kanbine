@@ -1,6 +1,6 @@
 package com.kanbine.backend.controllers;
 
-import com.kanbine.backend.models.User;
+import com.kanbine.backend.dto.UserDTO;
 import com.kanbine.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,17 +16,17 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public List<User> getAllUsers() {
+    public List<UserDTO> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userService.saveUser(user);
+    public UserDTO createUser(@RequestBody UserDTO userDTO) {
+        return userService.saveUser(userDTO);
     }
 
     @GetMapping("/{id}")
-    public Optional<User> getUserById(@PathVariable Long id) {
+    public Optional<UserDTO> getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
     }
 
@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @PostMapping("/{userId}/assignments/{assignmentId}")
-    public User assignAssignmentToUser(@PathVariable Long userId, @PathVariable Long assignmentId) {
+    public UserDTO assignAssignmentToUser(@PathVariable Long userId, @PathVariable Long assignmentId) {
         return userService.assignAssignmentToUser(userId, assignmentId);
     }
 }

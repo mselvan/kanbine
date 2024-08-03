@@ -50,3 +50,8 @@ task seedData(type: JavaExec) {
     args = ['--spring.profiles.active=seed']
 }
 
+dependencies {
+    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+}
+

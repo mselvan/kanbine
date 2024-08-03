@@ -38,12 +38,12 @@ public class TimeCard {
         if (java.time.Duration.between(startTime, endTime).toMinutes() > 10) {
             throw new IllegalArgumentException("TimeCard duration cannot exceed 10 minutes");
         }
-        if (!isValid10MinuteBlock(startTime, endTime)) {
+        if (!isValidTenMinuteBlock(startTime, endTime)) {
             throw new IllegalArgumentException("Start time and end time must be within the same 10-minute block");
         }
     }
 
-    private boolean isValid10MinuteBlock(LocalDateTime start, LocalDateTime end) {
+    private boolean isValidTenMinuteBlock(LocalDateTime start, LocalDateTime end) {
         long startMinute = start.getMinute();
         long endMinute = end.getMinute();
         return (startMinute / 10) == (endMinute / 10);
