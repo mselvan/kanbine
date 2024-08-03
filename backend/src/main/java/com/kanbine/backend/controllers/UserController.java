@@ -1,9 +1,16 @@
 package com.kanbine.backend.controllers;
 
-import com.kanbine.backend.dto.UserDTO;
+import com.kanbine.backend.dto.request.UserRequest;
+import com.kanbine.backend.dto.response.UserResponse;
 import com.kanbine.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,17 +23,17 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public List<UserDTO> getAllUsers() {
+    public List<UserResponse> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @PostMapping
-    public UserDTO createUser(@RequestBody UserDTO userDTO) {
-        return userService.saveUser(userDTO);
+    public UserResponse createUser(@RequestBody UserRequest userRequest) {
+        return userService.saveUser(userRequest);
     }
 
     @GetMapping("/{id}")
-    public Optional<UserDTO> getUserById(@PathVariable Long id) {
+    public Optional<UserResponse> getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
     }
 
@@ -36,7 +43,7 @@ public class UserController {
     }
 
     @PostMapping("/{userId}/assignments/{assignmentId}")
-    public UserDTO assignAssignmentToUser(@PathVariable Long userId, @PathVariable Long assignmentId) {
+    public UserResponse assignAssignmentToUser(@PathVariable Long userId, @PathVariable Long assignmentId) {
         return userService.assignAssignmentToUser(userId, assignmentId);
     }
 }

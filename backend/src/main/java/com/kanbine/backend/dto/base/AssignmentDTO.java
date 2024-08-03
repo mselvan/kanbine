@@ -1,4 +1,4 @@
-package com.kanbine.backend.dto;
+package com.kanbine.backend.dto.base;
 
 import lombok.Data;
 

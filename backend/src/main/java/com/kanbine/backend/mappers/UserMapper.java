@@ -1,6 +1,7 @@
 package com.kanbine.backend.mappers;
 
-import com.kanbine.backend.dto.UserDTO;
+import com.kanbine.backend.dto.request.UserRequest;
+import com.kanbine.backend.dto.response.UserResponse;
 import com.kanbine.backend.models.Assignment;
 import com.kanbine.backend.models.User;
 import org.mapstruct.Mapper;
@@ -12,10 +13,11 @@ public interface UserMapper {
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
     @Mapping(target = "assignmentIds", source = "assignments")
-    UserDTO toUserDTO(User user);
+    UserResponse toUserResponse(User user);
 
     @Mapping(target = "assignments", ignore = true)
-    User toUser(UserDTO userDTO);
+    @Mapping(target = "timeCards", ignore = true)
+    User toUser(UserRequest userRequest);
 
     default Long mapAssignmentToId(Assignment assignment) {
         return assignment.getId();

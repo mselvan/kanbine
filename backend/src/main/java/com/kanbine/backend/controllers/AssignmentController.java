@@ -1,6 +1,7 @@
 package com.kanbine.backend.controllers;
 
-import com.kanbine.backend.dto.AssignmentDTO;
+import com.kanbine.backend.dto.request.AssignmentRequest;
+import com.kanbine.backend.dto.response.AssignmentResponse;
 import com.kanbine.backend.services.AssignmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,17 +17,17 @@ public class AssignmentController {
     private AssignmentService assignmentService;
 
     @GetMapping
-    public List<AssignmentDTO> getAllAssignments() {
+    public List<AssignmentResponse> getAllAssignments() {
         return assignmentService.getAllAssignments();
     }
 
     @PostMapping
-    public AssignmentDTO createAssignment(@RequestBody AssignmentDTO assignmentDTO) {
-        return assignmentService.saveAssignment(assignmentDTO);
+    public AssignmentResponse createAssignment(@RequestBody AssignmentRequest assignmentRequest) {
+        return assignmentService.saveAssignment(assignmentRequest);
     }
 
     @GetMapping("/{id}")
-    public Optional<AssignmentDTO> getAssignmentById(@PathVariable Long id) {
+    public Optional<AssignmentResponse> getAssignmentById(@PathVariable Long id) {
         return assignmentService.getAssignmentById(id);
     }
 

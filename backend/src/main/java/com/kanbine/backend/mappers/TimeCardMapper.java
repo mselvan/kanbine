@@ -1,6 +1,7 @@
 package com.kanbine.backend.mappers;
 
-import com.kanbine.backend.dto.TimeCardDTO;
+import com.kanbine.backend.dto.request.TimeCardRequest;
+import com.kanbine.backend.dto.response.TimeCardResponse;
 import com.kanbine.backend.models.TimeCard;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -12,9 +13,9 @@ public interface TimeCardMapper {
 
     @Mapping(target = "userId", source = "user.id")
     @Mapping(target = "assignmentId", source = "assignment.id")
-    TimeCardDTO toTimeCardDTO(TimeCard timeCard);
+    TimeCardResponse toTimeCardResponse(TimeCard timeCard);
 
     @Mapping(target = "user", ignore = true)
     @Mapping(target = "assignment", ignore = true)
-    TimeCard toTimeCard(TimeCardDTO timeCardDTO);
+    TimeCard toTimeCard(TimeCardRequest timeCardRequest);
 }

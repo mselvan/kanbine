@@ -1,6 +1,7 @@
 package com.kanbine.backend.services;
 
-import com.kanbine.backend.dto.UserDTO;
+import com.kanbine.backend.dto.request.UserRequest;
+import com.kanbine.backend.dto.response.UserResponse;
 import com.kanbine.backend.mappers.UserMapper;
 import com.kanbine.backend.models.User;
 import com.kanbine.backend.models.Assignment;
@@ -24,31 +25,31 @@ public class UserService {
 
     private final UserMapper userMapper = UserMapper.INSTANCE;
 
-    public List<UserDTO> getAllUsers() {
+    public List<UserResponse> getAllUsers() {
         return userRepository.findAll().stream()
-                .map(userMapper::toUserDTO)
+                .map(userMapper::toUserResponse)
                 .collect(Collectors.toList());
     }
 
-    public UserDTO saveUser(UserDTO userDTO) {
-        User user = userMapper.toUser(userDTO);
+    public UserResponse saveUser(UserRequest userRequest) {
+        User user = userMapper.toUser(userRequest);
         user = userRepository.save(user);
-        return userMapper.toUserDTO(user);
+        return userMapper.toUserResponse(user);
     }
 
-    public Optional<UserDTO> getUserById(Long id) {
-        return userRepository.findById(id).map(userMapper::toUserDTO);
+    public Optional<UserResponse> getUserById(Long id) {
+        return userRepository.findById(id).map(userMapper::toUserResponse);
     }
 
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
 
-    public UserDTO assignAssignmentToUser(Long userId, Long assignmentId) {
+    public UserResponse assignAssignmentToUser(Long userId, Long assignmentId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
         Assignment assignment = assignmentRepository.findById(assignmentId).orElseThrow(() -> new IllegalArgumentException("Assignment not found"));
         user.getAssignments().add(assignment);
         user = userRepository.save(user);
-        return userMapper.toUserDTO(user);
+        return userMapper.toUserResponse(user);
     }
 }
