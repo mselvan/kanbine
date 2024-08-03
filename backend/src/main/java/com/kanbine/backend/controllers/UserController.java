@@ -34,4 +34,9 @@ public class UserController {
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
     }
+
+    @PostMapping("/{userId}/assignments/{assignmentId}")
+    public User assignAssignmentToUser(@PathVariable Long userId, @PathVariable Long assignmentId) {
+        return userService.assignAssignmentToUser(userId, assignmentId);
+    }
 }

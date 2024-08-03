@@ -2,6 +2,7 @@ package com.kanbine.backend.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -18,8 +19,13 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Assignment> assignments;
+    private List<TimeCard> timeCards = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TimeCard> timeCards;
+    @ManyToMany
+    @JoinTable(
+            name = "user_assignment",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "assignment_id")
+    )
+    private List<Assignment> assignments = new ArrayList<>();
 }
