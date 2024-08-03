@@ -3,8 +3,8 @@ package com.kanbine.backend.services;
 import com.kanbine.backend.dto.request.UserRequest;
 import com.kanbine.backend.dto.response.UserResponse;
 import com.kanbine.backend.mappers.UserMapper;
-import com.kanbine.backend.models.User;
 import com.kanbine.backend.models.Assignment;
+import com.kanbine.backend.models.User;
 import com.kanbine.backend.repositories.UserRepository;
 import com.kanbine.backend.repositories.AssignmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,22 +23,23 @@ public class UserService {
     @Autowired
     private AssignmentRepository assignmentRepository;
 
-    private final UserMapper userMapper = UserMapper.INSTANCE;
+    @Autowired
+    private UserMapper userMapper;
 
     public List<UserResponse> getAllUsers() {
-        return userRepository.findAll().stream()
-                .map(userMapper::toUserResponse)
-                .collect(Collectors.toList());
+        List<User> users = userRepository.findAll();
+        return users.stream().map(userMapper::toUserResponse).collect(Collectors.toList());
     }
 
     public UserResponse saveUser(UserRequest userRequest) {
         User user = userMapper.toUser(userRequest);
-        user = userRepository.save(user);
-        return userMapper.toUserResponse(user);
+        User savedUser = userRepository.save(user);
+        return userMapper.toUserResponse(savedUser);
     }
 
     public Optional<UserResponse> getUserById(Long id) {
-        return userRepository.findById(id).map(userMapper::toUserResponse);
+        Optional<User> user = userRepository.findById(id);
+        return user.map(userMapper::toUserResponse);
     }
 
     public void deleteUser(Long id) {
@@ -49,7 +50,7 @@ public class UserService {
         User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
         Assignment assignment = assignmentRepository.findById(assignmentId).orElseThrow(() -> new IllegalArgumentException("Assignment not found"));
         user.getAssignments().add(assignment);
-        user = userRepository.save(user);
-        return userMapper.toUserResponse(user);
+        User updatedUser = userRepository.save(user);
+        return userMapper.toUserResponse(updatedUser);
     }
 }
