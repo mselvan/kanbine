@@ -18,22 +18,22 @@ public class AssignmentService {
     @Autowired
     private AssignmentRepository assignmentRepository;
 
-    private final AssignmentMapper assignmentMapper = AssignmentMapper.INSTANCE;
+    private AssignmentMapper assignmentMapper = AssignmentMapper.INSTANCE;
 
     public List<AssignmentResponse> getAllAssignments() {
-        return assignmentRepository.findAll().stream()
-                .map(assignmentMapper::toAssignmentResponse)
-                .collect(Collectors.toList());
+        List<Assignment> assignments = assignmentRepository.findAll();
+        return assignments.stream().map(assignmentMapper::toAssignmentResponse).collect(Collectors.toList());
+    }
+
+    public Optional<AssignmentResponse> getAssignmentById(Long id) {
+        Optional<Assignment> assignment = assignmentRepository.findById(id);
+        return assignment.map(assignmentMapper::toAssignmentResponse);
     }
 
     public AssignmentResponse saveAssignment(AssignmentRequest assignmentRequest) {
         Assignment assignment = assignmentMapper.toAssignment(assignmentRequest);
-        assignment = assignmentRepository.save(assignment);
-        return assignmentMapper.toAssignmentResponse(assignment);
-    }
-
-    public Optional<AssignmentResponse> getAssignmentById(Long id) {
-        return assignmentRepository.findById(id).map(assignmentMapper::toAssignmentResponse);
+        Assignment savedAssignment = assignmentRepository.save(assignment);
+        return assignmentMapper.toAssignmentResponse(savedAssignment);
     }
 
     public void deleteAssignment(Long id) {
