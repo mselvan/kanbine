@@ -29,12 +29,13 @@ Kanbine is a time tracking application designed to help users manage and track t
 - Lombok
 
 ## Getting Started
+Following command runs the app in docker, automatically provisions a mysql docker container.
+```sh
+docker-compose up --build
+```
 
-### Prerequisites
+Once the app is up, visit http://localhost:8080/swagger-ui/index.html
 
-- Java 17 or later
-- MySQL
-- Gradle
 
 ### Setup
 
