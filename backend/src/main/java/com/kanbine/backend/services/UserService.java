@@ -23,8 +23,7 @@ public class UserService {
     @Autowired
     private AssignmentRepository assignmentRepository;
 
-    @Autowired
-    private UserMapper userMapper;
+    private UserMapper userMapper = UserMapper.INSTANCE;
 
     public List<UserResponse> getAllUsers() {
         List<User> users = userRepository.findAll();

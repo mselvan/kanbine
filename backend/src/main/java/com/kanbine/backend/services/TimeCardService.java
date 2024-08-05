@@ -20,8 +20,7 @@ public class TimeCardService {
     @Autowired
     private TimeCardRepository timeCardRepository;
 
-    @Autowired
-    private TimeCardMapper timeCardMapper;
+    private TimeCardMapper timeCardMapper = TimeCardMapper.INSTANCE;
 
     public List<TimeCardResponse> getAllTimeCards() {
         List<TimeCard> timeCards = timeCardRepository.findAll();

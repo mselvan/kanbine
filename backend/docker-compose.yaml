@@ -1,0 +1,29 @@
+services:
+  mysql:
+    image: mysql:8.1
+    container_name: kanbine-db
+    environment:
+      MYSQL_DATABASE: kanbine
+      MYSQL_USER: kanbine
+      MYSQL_PASSWORD: kanbine
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  app:
+    build: .
+    container_name: kanbine-app
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://kanbine-db:3306/kanbine
+      SPRING_DATASOURCE_USERNAME: kanbine
+      SPRING_DATASOURCE_PASSWORD: kanbine
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+
+volumes:
+  mysql-data:
