@@ -14,9 +14,12 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Seeder class for populating the database with initial test data.
+ * This class runs when the application is started with the "seed" profile.
+ */
 @Component
 @Profile("seed")
 public class DataSeeder implements CommandLineRunner {
@@ -30,6 +33,13 @@ public class DataSeeder implements CommandLineRunner {
     @Autowired
     private TimeCardRepository timeCardRepository;
 
+    /**
+     * The run method is executed at application startup.
+     * It seeds the database with test data including users, assignments, and time cards.
+     *
+     * @param args command-line arguments passed to the application.
+     * @throws Exception if there is an error during data seeding.
+     */
     @Override
     public void run(String... args) throws Exception {
         // Create Users
@@ -71,6 +81,14 @@ public class DataSeeder implements CommandLineRunner {
         createTimeCardsForDuration(user2, assignment2, 2);
     }
 
+    /**
+     * Creates time cards for the specified duration in hours.
+     * Each time card represents a 10-minute block within the specified hours.
+     *
+     * @param user the user to whom the time cards belong.
+     * @param assignment the assignment to which the time cards are associated.
+     * @param hours the number of hours for which to create time cards.
+     */
     private void createTimeCardsForDuration(User user, Assignment assignment, int hours) {
         LocalDateTime startTime = LocalDateTime.now().truncatedTo(ChronoUnit.HOURS).minusHours(hours);
 
