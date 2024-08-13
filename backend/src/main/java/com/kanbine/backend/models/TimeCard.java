@@ -1,10 +1,17 @@
 package com.kanbine.backend.models;
 
+import com.kanbine.backend.utils.TimeCardUtils;
 import jakarta.persistence.*;
-import lombok.Data;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+
 import java.time.LocalDateTime;
 
+/**
+ * Entity representing a time card in the system.
+ * A time card tracks the start and end time of work done by a user on an assignment.
+ * The start and end times must be within the same 10-minute block.
+ */
 @Data
 @Entity
 public class TimeCard {
@@ -26,6 +33,10 @@ public class TimeCard {
     @NotNull
     private LocalDateTime endTime;
 
+    /**
+     * Validates that the start time and end time are within the same 10-minute block.
+     * Throws an IllegalArgumentException if the validation fails.
+     */
     @PrePersist
     @PreUpdate
     private void validateTimeCard() {
@@ -38,14 +49,8 @@ public class TimeCard {
         if (java.time.Duration.between(startTime, endTime).toMinutes() > 10) {
             throw new IllegalArgumentException("TimeCard duration cannot exceed 10 minutes");
         }
-        if (!isValidTenMinuteBlock(startTime, endTime)) {
+        if (!TimeCardUtils.isValidTenMinuteBlock(startTime, endTime)) {
             throw new IllegalArgumentException("Start time and end time must be within the same 10-minute block");
         }
-    }
-
-    private boolean isValidTenMinuteBlock(LocalDateTime start, LocalDateTime end) {
-        long startMinute = start.getMinute();
-        long endMinute = end.getMinute();
-        return (startMinute / 10) == (endMinute / 10);
     }
 }

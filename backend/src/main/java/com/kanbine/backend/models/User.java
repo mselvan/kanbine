@@ -2,9 +2,13 @@ package com.kanbine.backend.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import java.util.ArrayList;
+
 import java.util.List;
 
+/**
+ * Entity representing a user in the system.
+ * A user has an email, password, and is associated with a list of assignments and time cards.
+ */
 @Data
 @Entity
 public class User {
@@ -12,20 +16,18 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TimeCard> timeCards = new ArrayList<>();
+    @OneToMany(mappedBy = "user")
+    private List<TimeCard> timeCards;
 
     @ManyToMany
     @JoinTable(
-            name = "user_assignment",
+            name = "user_assignments",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "assignment_id")
     )
-    private List<Assignment> assignments = new ArrayList<>();
+    private List<Assignment> assignments;
 }

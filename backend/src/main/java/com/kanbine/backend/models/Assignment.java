@@ -6,6 +6,11 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Entity representing an assignment in the system.
+ * An assignment has a name, description, hourly rate, and currency.
+ * It is associated with a list of time cards and users.
+ */
 @Data
 @Entity
 public class Assignment {
