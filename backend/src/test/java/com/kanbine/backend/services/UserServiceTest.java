@@ -23,6 +23,10 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * Unit tests for the {@link UserService} class.
+ * These tests validate the behavior of UserService methods using mocked dependencies.
+ */
 class UserServiceTest {
 
     private static final Logger logger = LoggerFactory.getLogger(UserServiceTest.class);
@@ -44,6 +48,9 @@ class UserServiceTest {
     private UserResponse userResponse;
     private AutoCloseable closeable;
 
+    /**
+     * Initializes the test environment and sets up test data before each test.
+     */
     @BeforeEach
     void setUp() {
         closeable = MockitoAnnotations.openMocks(this);
@@ -62,11 +69,18 @@ class UserServiceTest {
         userResponse.setEmail("test@example.com");
     }
 
+    /**
+     * Cleans up resources after each test.
+     */
     @AfterEach
     void tearDown() throws Exception {
         closeable.close();
     }
 
+    /**
+     * Tests the {@link UserService#getAllUsers()} method.
+     * Validates that the method returns a list of all users.
+     */
     @Test
     void testGetAllUsers() {
         List<User> users = Arrays.asList(user);
@@ -85,6 +99,10 @@ class UserServiceTest {
         verify(userMapper, times(1)).toUserResponse(user);
     }
 
+    /**
+     * Tests the {@link UserService#saveUser(UserRequest)} method.
+     * Validates that a new user is saved correctly.
+     */
     @Test
     void testSaveUser() {
         when(userMapper.toUser(userRequest)).thenReturn(user);
@@ -100,6 +118,10 @@ class UserServiceTest {
         verify(userMapper, times(1)).toUserResponse(user);
     }
 
+    /**
+     * Tests the {@link UserService#getUserById(Long)} method.
+     * Validates that a user is correctly retrieved by ID.
+     */
     @Test
     void testGetUserById() {
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
@@ -114,12 +136,20 @@ class UserServiceTest {
         verify(userMapper, times(1)).toUserResponse(user);
     }
 
+    /**
+     * Tests the {@link UserService#deleteUser(Long)} method.
+     * Validates that a user is correctly deleted by ID.
+     */
     @Test
     void testDeleteUser() {
         userService.deleteUser(1L);
         verify(userRepository, times(1)).deleteById(1L);
     }
 
+    /**
+     * Tests the {@link UserService#assignAssignmentToUser(Long, Long)} method.
+     * Validates that an assignment is correctly assigned to a user.
+     */
     @Test
     void testAssignAssignmentToUser() {
         Assignment assignment = new Assignment();

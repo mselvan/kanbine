@@ -20,6 +20,10 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * Unit tests for the {@link AssignmentService} class.
+ * These tests validate the behavior of AssignmentService methods using mocked dependencies.
+ */
 class AssignmentServiceTest {
 
     @Mock
@@ -36,6 +40,9 @@ class AssignmentServiceTest {
     private AssignmentResponse assignmentResponse;
     private AutoCloseable closeable;
 
+    /**
+     * Initializes the test environment and sets up test data before each test.
+     */
     @BeforeEach
     void setUp() {
         closeable = MockitoAnnotations.openMocks(this);
@@ -61,11 +68,18 @@ class AssignmentServiceTest {
         assignmentResponse.setCurrency("USD");
     }
 
+    /**
+     * Cleans up resources after each test.
+     */
     @AfterEach
     void tearDown() throws Exception {
         closeable.close();
     }
 
+    /**
+     * Tests the {@link AssignmentService#getAllAssignments()} method.
+     * Validates that the method returns a list of all assignments.
+     */
     @Test
     void testGetAllAssignments() {
         List<Assignment> assignments = Arrays.asList(assignment);
@@ -83,6 +97,10 @@ class AssignmentServiceTest {
         verify(assignmentMapper, times(1)).toAssignmentResponse(assignment);
     }
 
+    /**
+     * Tests the {@link AssignmentService#saveAssignment(AssignmentRequest)} method.
+     * Validates that a new assignment is saved correctly.
+     */
     @Test
     void testSaveAssignment() {
         when(assignmentMapper.toAssignment(assignmentRequest)).thenReturn(assignment);
@@ -99,6 +117,10 @@ class AssignmentServiceTest {
         verify(assignmentMapper, times(1)).toAssignmentResponse(assignment);
     }
 
+    /**
+     * Tests the {@link AssignmentService#getAssignmentById(Long)} method.
+     * Validates that an assignment is correctly retrieved by ID.
+     */
     @Test
     void testGetAssignmentById() {
         when(assignmentRepository.findById(1L)).thenReturn(Optional.of(assignment));
@@ -113,6 +135,10 @@ class AssignmentServiceTest {
         verify(assignmentMapper, times(1)).toAssignmentResponse(assignment);
     }
 
+    /**
+     * Tests the {@link AssignmentService#deleteAssignment(Long)} method.
+     * Validates that an assignment is correctly deleted by ID.
+     */
     @Test
     void testDeleteAssignment() {
         assignmentService.deleteAssignment(1L);

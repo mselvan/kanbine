@@ -23,6 +23,10 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * Unit tests for the {@link TimeCardService} class.
+ * These tests validate the behavior of TimeCardService methods using mocked dependencies.
+ */
 class TimeCardServiceTest {
 
     private static final Logger logger = LoggerFactory.getLogger(TimeCardServiceTest.class);
@@ -41,6 +45,9 @@ class TimeCardServiceTest {
     private TimeCardResponse timeCardResponse;
     private AutoCloseable closeable;
 
+    /**
+     * Initializes the test environment and sets up test data before each test.
+     */
     @BeforeEach
     void setUp() {
         closeable = MockitoAnnotations.openMocks(this);
@@ -60,11 +67,18 @@ class TimeCardServiceTest {
         timeCardResponse.setEndTime(timeCard.getEndTime());
     }
 
+    /**
+     * Cleans up resources after each test.
+     */
     @AfterEach
     void tearDown() throws Exception {
         closeable.close();
     }
 
+    /**
+     * Tests the {@link TimeCardService#getAllTimeCards()} method.
+     * Validates that the method returns a list of all time cards.
+     */
     @Test
     void testGetAllTimeCards() {
         List<TimeCard> timeCards = Arrays.asList(timeCard);
@@ -84,6 +98,10 @@ class TimeCardServiceTest {
         verify(timeCardMapper, times(1)).toTimeCardResponse(timeCard);
     }
 
+    /**
+     * Tests the {@link TimeCardService#getTimeCardById(Long)} method.
+     * Validates that a time card is correctly retrieved by ID.
+     */
     @Test
     void testGetTimeCardById() {
         when(timeCardRepository.findById(1L)).thenReturn(Optional.of(timeCard));
@@ -98,6 +116,10 @@ class TimeCardServiceTest {
         verify(timeCardMapper, times(1)).toTimeCardResponse(timeCard);
     }
 
+    /**
+     * Tests the {@link TimeCardService#saveTimeCard(TimeCardRequest)} method.
+     * Validates that a new time card is saved correctly.
+     */
     @Test
     void testSaveTimeCard() {
         when(timeCardMapper.toTimeCard(timeCardRequest)).thenReturn(timeCard);
@@ -116,6 +138,10 @@ class TimeCardServiceTest {
         verify(timeCardMapper, times(1)).toTimeCardResponse(timeCard);
     }
 
+    /**
+     * Tests the {@link TimeCardService#deleteTimeCard(Long)} method.
+     * Validates that a time card is correctly deleted by ID.
+     */
     @Test
     void testDeleteTimeCard() {
         timeCardService.deleteTimeCard(1L);
