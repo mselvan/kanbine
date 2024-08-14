@@ -56,7 +56,7 @@ task seedData(type: JavaExec) {
     group = 'Application'
     description = 'Seeds the database with initial data'
     classpath = sourceSets.main.runtimeClasspath
-    main = 'com.kanbine.backend.BackendApplication'
+    mainClass = 'com.kanbine.backend.BackendApplication'
     args = ['--spring.profiles.active=seed']
 }
 
