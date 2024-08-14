@@ -1,0 +1,12 @@
+com.kanbine.backend
+com.kanbine.backend.config
+com.kanbine.backend.controllers
+com.kanbine.backend.dto.base
+com.kanbine.backend.dto.request
+com.kanbine.backend.dto.response
+com.kanbine.backend.mappers
+com.kanbine.backend.models
+com.kanbine.backend.repositories
+com.kanbine.backend.seed
+com.kanbine.backend.services
+com.kanbine.backend.utils
