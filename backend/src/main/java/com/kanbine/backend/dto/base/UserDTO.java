@@ -4,9 +4,13 @@ import lombok.Data;
 
 import java.util.List;
 
+/**
+ * Data Transfer Object (DTO) representing a user.
+ * This DTO is used to transfer user data between layers of the application.
+ */
 @Data
 public class UserDTO {
-    protected Long id;
-    protected String email;
-    protected List<Long> assignmentIds;
+    private Long id;
+    private String email;
+    private List<Long> assignmentIds;
 }

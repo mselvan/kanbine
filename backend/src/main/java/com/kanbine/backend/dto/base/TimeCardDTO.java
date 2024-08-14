@@ -4,6 +4,10 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+/**
+ * Data Transfer Object (DTO) representing a time card.
+ * This DTO is used to transfer time card data between layers of the application.
+ */
 @Data
 public class TimeCardDTO {
     private Long id;

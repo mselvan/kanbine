@@ -5,6 +5,10 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.util.List;
 
+/**
+ * Data Transfer Object (DTO) representing an assignment.
+ * This DTO is used to transfer assignment data between layers of the application.
+ */
 @Data
 public class AssignmentDTO {
     private Long id;
