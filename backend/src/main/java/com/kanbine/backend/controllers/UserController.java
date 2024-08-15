@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * REST controller for managing users.
@@ -82,6 +81,19 @@ public class UserController {
     @PostMapping("/{userId}/assignments/{assignmentId}")
     public ResponseEntity<UserResponse> assignAssignmentToUser(@PathVariable Long userId, @PathVariable Long assignmentId) {
         UserResponse userResponse = userService.assignAssignmentToUser(userId, assignmentId);
+        return ResponseEntity.ok(userResponse);
+    }
+
+    /**
+     * Unassigns an assignment from a user.
+     *
+     * @param userId the ID of the user to unassign the assignment from.
+     * @param assignmentId the ID of the assignment to unassign.
+     * @return a {@link ResponseEntity} containing the updated {@link UserResponse} object.
+     */
+    @DeleteMapping("/{userId}/assignments/{assignmentId}")
+    public ResponseEntity<UserResponse> unassignAssignmentFromUser(@PathVariable Long userId, @PathVariable Long assignmentId) {
+        UserResponse userResponse = userService.unassignAssignmentFromUser(userId, assignmentId);
         return ResponseEntity.ok(userResponse);
     }
 }

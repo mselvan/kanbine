@@ -2,7 +2,7 @@ package com.kanbine.backend.dto.base;
 
 import lombok.Data;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * Data Transfer Object (DTO) representing a user.
@@ -12,5 +12,5 @@ import java.util.List;
 public class UserDTO {
     private Long id;
     private String email;
-    private List<Long> assignmentIds;
+    private Set<Long> assignmentIds;
 }

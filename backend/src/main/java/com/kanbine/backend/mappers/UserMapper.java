@@ -4,9 +4,13 @@ import com.kanbine.backend.dto.request.UserRequest;
 import com.kanbine.backend.dto.response.UserResponse;
 import com.kanbine.backend.models.Assignment;
 import com.kanbine.backend.models.User;
+import com.kanbine.backend.models.UserAssignment;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Mapper interface for converting between User entities and DTOs.
@@ -25,7 +29,7 @@ public interface UserMapper {
      * @param user the User entity.
      * @return the corresponding UserResponse DTO.
      */
-    @Mapping(target = "assignmentIds", source = "assignments")
+    @Mapping(target = "assignmentIds", expression = "java(mapUserAssignmentsToAssignmentIds(user.getUserAssignments()))")
     UserResponse toUserResponse(User user);
 
     /**
@@ -35,7 +39,7 @@ public interface UserMapper {
      * @param userRequest the DTO containing user details.
      * @return the corresponding User entity.
      */
-    @Mapping(target = "assignments", ignore = true)
+    @Mapping(target = "userAssignments", ignore = true)
     @Mapping(target = "timeCards", ignore = true)
     User toUser(UserRequest userRequest);
 
@@ -49,4 +53,22 @@ public interface UserMapper {
     default Long mapAssignmentToId(Assignment assignment) {
         return assignment.getId();
     }
+
+    /**
+     * Maps a list of {@link UserAssignment} entities to a list of assignment IDs.
+     * <p>
+     * This method extracts the assignment ID from each {@link UserAssignment} instance and returns
+     * them as a list of {@code Long} values. It is used to map the relationship between
+     * users and assignments in the DTO layer.
+     * </p>
+     *
+     * @param userAssignments the list of {@link UserAssignment} entities to map.
+     * @return a list of assignment IDs extracted from the provided {@link UserAssignment} entities.
+     */
+    default Set<Long> mapUserAssignmentsToAssignmentIds(Set<UserAssignment> userAssignments) {
+        return userAssignments.stream()
+                .map(userAssignment -> userAssignment.getAssignment().getId())
+                .collect(Collectors.toSet());
+    }
+
 }

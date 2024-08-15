@@ -1,10 +1,19 @@
 package com.kanbine.backend.models;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Entity representing an assignment in the system.
@@ -27,8 +36,10 @@ public class Assignment {
     private String currency = "USD";
 
     @OneToMany(mappedBy = "assignment", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TimeCard> timeCards = new ArrayList<>();
+    private Set<TimeCard> timeCards = new HashSet<>();
 
-    @ManyToMany(mappedBy = "assignments")
-    private List<User> users = new ArrayList<>();
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "assignment", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<UserAssignment> userAssignments = new HashSet<>();
 }

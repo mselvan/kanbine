@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Data Transfer Object (DTO) representing an assignment.
@@ -16,5 +17,5 @@ public class AssignmentDTO {
     private String description;
     private BigDecimal hourlyRate;
     private String currency;
-    private List<Long> userIds;
+    private Set<Long> userIds;
 }
