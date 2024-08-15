@@ -10,10 +10,7 @@ import com.kanbine.backend.repositories.UserRepository;
 import com.kanbine.backend.utils.TimeCardUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -48,7 +45,7 @@ public class TimeCardService {
      * Retrieves a time card by its ID.
      *
      * @param id the ID of the time card to retrieve.
-     * @return an Optional containing the TimeCardResponse object if found, otherwise empty.
+     * @return the TimeCardResponse object if found, otherwise empty.
      */
     public TimeCardResponse getTimeCardById(Long id) {
         Optional<TimeCard> timeCard = timeCardRepository.findById(id);
