@@ -18,8 +18,8 @@ public class BackendApplication {
     public static void main(String[] args) {
         try {
             SpringApplication.run(BackendApplication.class, args);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
     }
 
