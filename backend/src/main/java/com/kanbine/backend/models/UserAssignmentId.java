@@ -7,6 +7,10 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
+/**
+ * Represents the composite key for the {@link UserAssignment} entity,
+ * combining the userId and assignmentId to uniquely identify a User-Assignment relationship.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
