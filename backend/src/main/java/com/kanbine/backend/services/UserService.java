@@ -5,10 +5,12 @@ import com.kanbine.backend.dto.response.UserResponse;
 import com.kanbine.backend.mappers.UserMapper;
 import com.kanbine.backend.models.Assignment;
 import com.kanbine.backend.models.User;
-import com.kanbine.backend.repositories.UserRepository;
 import com.kanbine.backend.repositories.AssignmentRepository;
+import com.kanbine.backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +28,9 @@ public class UserService {
 
     @Autowired
     private AssignmentRepository assignmentRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     private UserMapper userMapper = UserMapper.INSTANCE;
 
@@ -45,8 +50,10 @@ public class UserService {
      * @param userRequest the request object containing the user details.
      * @return the saved UserResponse object.
      */
+    @Transactional
     public UserResponse saveUser(UserRequest userRequest) {
         User user = userMapper.toUser(userRequest);
+        user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         User savedUser = userRepository.save(user);
         return userMapper.toUserResponse(savedUser);
     }
@@ -57,9 +64,10 @@ public class UserService {
      * @param id the ID of the user to retrieve.
      * @return an Optional containing the UserResponse object if found, otherwise empty.
      */
-    public Optional<UserResponse> getUserById(Long id) {
+    public UserResponse getUserById(Long id) {
         Optional<User> user = userRepository.findById(id);
-        return user.map(userMapper::toUserResponse);
+        return user.map(userMapper::toUserResponse)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
     }
 
     /**
@@ -74,16 +82,18 @@ public class UserService {
     /**
      * Assigns an assignment to a user.
      *
-     * @param userId the ID of the user to assign the assignment to.
+     * @param userId       the ID of the user to assign the assignment to.
      * @param assignmentId the ID of the assignment to assign.
      * @return the updated UserResponse object.
      * @throws IllegalArgumentException if the user or assignment is not found.
      */
     public UserResponse assignAssignmentToUser(Long userId, Long assignmentId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
-        Assignment assignment = assignmentRepository.findById(assignmentId).orElseThrow(() -> new IllegalArgumentException("Assignment not found"));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+        Assignment assignment = assignmentRepository.findById(assignmentId)
+                .orElseThrow(() -> new IllegalArgumentException("Assignment not found"));
         user.getAssignments().add(assignment);
-        User updatedUser = userRepository.save(user);
-        return userMapper.toUserResponse(updatedUser);
+        User savedUser = userRepository.save(user);
+        return userMapper.toUserResponse(savedUser);
     }
 }

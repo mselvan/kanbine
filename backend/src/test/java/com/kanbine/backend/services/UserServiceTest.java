@@ -127,10 +127,9 @@ class UserServiceTest {
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         when(userMapper.toUserResponse(user)).thenReturn(userResponse);
 
-        Optional<UserResponse> foundUser = userService.getUserById(1L);
+        UserResponse foundUser = userService.getUserById(1L);
 
-        assertTrue(foundUser.isPresent());
-        assertEquals("test@example.com", foundUser.get().getEmail());
+        assertEquals("test@example.com", foundUser.getEmail());
 
         verify(userRepository, times(1)).findById(1L);
         verify(userMapper, times(1)).toUserResponse(user);

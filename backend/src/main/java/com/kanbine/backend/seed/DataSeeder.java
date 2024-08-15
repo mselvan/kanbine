@@ -1,20 +1,20 @@
 package com.kanbine.backend.seed;
 
-import com.kanbine.backend.models.Assignment;
-import com.kanbine.backend.models.TimeCard;
-import com.kanbine.backend.models.User;
-import com.kanbine.backend.repositories.AssignmentRepository;
-import com.kanbine.backend.repositories.TimeCardRepository;
-import com.kanbine.backend.repositories.UserRepository;
+import com.kanbine.backend.dto.request.AssignmentRequest;
+import com.kanbine.backend.dto.request.TimeCardRequest;
+import com.kanbine.backend.dto.request.UserRequest;
+import com.kanbine.backend.services.AssignmentService;
+import com.kanbine.backend.services.TimeCardService;
+import com.kanbine.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
 
 /**
  * Seeder class for populating the database with initial test data.
@@ -25,13 +25,13 @@ import java.util.Arrays;
 public class DataSeeder implements CommandLineRunner {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
-    private AssignmentRepository assignmentRepository;
+    private AssignmentService assignmentService;
 
     @Autowired
-    private TimeCardRepository timeCardRepository;
+    private TimeCardService timeCardService;
 
     /**
      * The run method is executed at application startup.
@@ -41,73 +41,66 @@ public class DataSeeder implements CommandLineRunner {
      * @throws Exception if there is an error during data seeding.
      */
     @Override
+    @Transactional
     public void run(String... args) throws Exception {
         // Create Users
-        User user1 = new User();
-        user1.setEmail("ramesh@belyf.com");
-        user1.setPassword("password");
+        UserRequest userRequest1 = new UserRequest();
+        userRequest1.setEmail("ramesh@belyf.com");
+        userRequest1.setPassword("password");
 
-        User user2 = new User();
-        user2.setEmail("suresh@belyf.com");
-        user2.setPassword("password");
+        UserRequest userRequest2 = new UserRequest();
+        userRequest2.setEmail("suresh@belyf.com");
+        userRequest2.setPassword("password");
 
-        userRepository.save(user1);
-        userRepository.save(user2);
+        var user1 = userService.saveUser(userRequest1);
+        var user2 = userService.saveUser(userRequest2);
 
         // Create Assignments
-        Assignment assignment1 = new Assignment();
-        assignment1.setName("Technical Product Manager");
-        assignment1.setDescription("TPM");
-        assignment1.setHourlyRate(BigDecimal.valueOf(50));
-        assignment1.setCurrency("USD");
+        AssignmentRequest assignmentRequest1 = new AssignmentRequest();
+        assignmentRequest1.setName("Technical Product Manager");
+        assignmentRequest1.setDescription("TPM");
+        assignmentRequest1.setHourlyRate(BigDecimal.valueOf(50));
+        assignmentRequest1.setCurrency("USD");
 
-        Assignment assignment2 = new Assignment();
-        assignment2.setName("VP of Engineering");
-        assignment2.setDescription("VPoE");
-        assignment2.setHourlyRate(BigDecimal.valueOf(100));
-        assignment2.setCurrency("USD");
+        AssignmentRequest assignmentRequest2 = new AssignmentRequest();
+        assignmentRequest2.setName("VP of Engineering");
+        assignmentRequest2.setDescription("VPoE");
+        assignmentRequest2.setHourlyRate(BigDecimal.valueOf(100));
+        assignmentRequest2.setCurrency("USD");
 
-        assignmentRepository.save(assignment1);
-        assignmentRepository.save(assignment2);
+        var assignment1 = assignmentService.saveAssignment(assignmentRequest1);
+        var assignment2 = assignmentService.saveAssignment(assignmentRequest2);
 
         // Associate Users with Assignments
-        user1.setAssignments(Arrays.asList(assignment1));
-        user2.setAssignments(Arrays.asList(assignment2));
-        userRepository.save(user1);
-        userRepository.save(user2);
+        userService.assignAssignmentToUser(user1.getId(), assignment1.getId());
+        userService.assignAssignmentToUser(user2.getId(), assignment2.getId());
 
         // Create TimeCards for 2 hours
-        createTimeCardsForDuration(user1, assignment1, 2);
-        createTimeCardsForDuration(user2, assignment2, 2);
+        createTimeCardsForDuration(user1.getId(), assignment1.getId(), 2);
+        createTimeCardsForDuration(user2.getId(), assignment2.getId(), 2);
     }
 
     /**
      * Creates time cards for the specified duration in hours.
      * Each time card represents a 10-minute block within the specified hours.
      *
-     * @param user the user to whom the time cards belong.
-     * @param assignment the assignment to which the time cards are associated.
+     * @param userId the user to whom the time cards belong.
+     * @param assignmentId the assignment to which the time cards are associated.
      * @param hours the number of hours for which to create time cards.
      */
-    private void createTimeCardsForDuration(User user, Assignment assignment, int hours) {
+    private void createTimeCardsForDuration(Long userId, Long assignmentId, int hours) {
         LocalDateTime startTime = LocalDateTime.now().truncatedTo(ChronoUnit.HOURS).minusHours(hours);
 
         for (int i = 0; i < hours * 6; i++) { // 6 time cards per hour for 10-minute intervals
-            TimeCard timeCard = new TimeCard();
-            timeCard.setUser(user);
-            timeCard.setAssignment(assignment);
-            timeCard.setStartTime(startTime);
-            timeCard.setEndTime(startTime.plusMinutes(9));
+            var timeCardRequest = new TimeCardRequest();
+            timeCardRequest.setUserId(userId);
+            timeCardRequest.setAssignmentId(assignmentId);
+            timeCardRequest.setStartTime(startTime);
+            timeCardRequest.setEndTime(startTime.plusMinutes(9));
 
-            timeCardRepository.save(timeCard);
-
-            user.getTimeCards().add(timeCard);  // Add to user's time cards
-            assignment.getTimeCards().add(timeCard);  // Add to assignment's time cards
+            timeCardService.saveTimeCard(timeCardRequest);
 
             startTime = startTime.plusMinutes(10); // Move to the next 10-minute block
         }
-
-        userRepository.save(user);  // Save user with updated time cards
-        assignmentRepository.save(assignment);  // Save assignment with updated time cards
     }
 }

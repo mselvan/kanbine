@@ -40,9 +40,10 @@ public class AssignmentService {
      * @param id the ID of the assignment to retrieve.
      * @return an Optional containing the AssignmentResponse object if found, otherwise empty.
      */
-    public Optional<AssignmentResponse> getAssignmentById(Long id) {
+    public AssignmentResponse getAssignmentById(Long id) {
         Optional<Assignment> assignment = assignmentRepository.findById(id);
-        return assignment.map(assignmentMapper::toAssignmentResponse);
+        return assignment.map(assignmentMapper::toAssignmentResponse)
+                .orElseThrow(() -> new IllegalArgumentException("Assignment not found"));
     }
 
     /**

@@ -5,6 +5,7 @@ import com.kanbine.backend.dto.response.TimeCardResponse;
 import com.kanbine.backend.services.TimeCardService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,33 +27,36 @@ public class TimeCardController {
     /**
      * Retrieves a list of all time cards.
      *
-     * @return a list of {@link TimeCardResponse} objects representing all time cards.
+     * @return a {@link ResponseEntity} containing a list of {@link TimeCardResponse} objects representing all time cards.
      */
     @GetMapping
-    public List<TimeCardResponse> getAllTimeCards() {
-        return timeCardService.getAllTimeCards();
+    public ResponseEntity<List<TimeCardResponse>> getAllTimeCards() {
+        List<TimeCardResponse> timeCards = timeCardService.getAllTimeCards();
+        return ResponseEntity.ok(timeCards);
     }
 
     /**
      * Creates a new time card.
      *
      * @param timeCardRequest the {@link TimeCardRequest} object containing the time card details.
-     * @return the created {@link TimeCardResponse} object.
+     * @return a {@link ResponseEntity} containing the created {@link TimeCardResponse} object.
      */
     @PostMapping
-    public TimeCardResponse createTimeCard(@Valid @RequestBody TimeCardRequest timeCardRequest) {
-        return timeCardService.saveTimeCard(timeCardRequest);
+    public ResponseEntity<TimeCardResponse> createTimeCard(@Valid @RequestBody TimeCardRequest timeCardRequest) {
+        TimeCardResponse timeCardResponse = timeCardService.saveTimeCard(timeCardRequest);
+        return ResponseEntity.ok(timeCardResponse);
     }
 
     /**
      * Retrieves a time card by its ID.
      *
      * @param id the ID of the time card to retrieve.
-     * @return an {@link Optional} containing the {@link TimeCardResponse} object if found, otherwise empty.
+     * @return a {@link ResponseEntity} containing the {@link TimeCardResponse} object if found, otherwise empty.
      */
     @GetMapping("/{id}")
-    public Optional<TimeCardResponse> getTimeCardById(@PathVariable Long id) {
-        return timeCardService.getTimeCardById(id);
+    public ResponseEntity<TimeCardResponse> getTimeCardById(@PathVariable Long id) {
+        TimeCardResponse timeCard = timeCardService.getTimeCardById(id);
+        return ResponseEntity.ok(timeCard);
     }
 
     /**

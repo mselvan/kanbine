@@ -107,10 +107,9 @@ class TimeCardServiceTest {
         when(timeCardRepository.findById(1L)).thenReturn(Optional.of(timeCard));
         when(timeCardMapper.toTimeCardResponse(timeCard)).thenReturn(timeCardResponse);
 
-        Optional<TimeCardResponse> foundTimeCard = timeCardService.getTimeCardById(1L);
+        TimeCardResponse foundTimeCard = timeCardService.getTimeCardById(1L);
 
-        assertTrue(foundTimeCard.isPresent());
-        assertEquals(timeCard.getStartTime(), foundTimeCard.get().getStartTime());
+        assertEquals(timeCard.getStartTime(), foundTimeCard.getStartTime());
 
         verify(timeCardRepository, times(1)).findById(1L);
         verify(timeCardMapper, times(1)).toTimeCardResponse(timeCard);

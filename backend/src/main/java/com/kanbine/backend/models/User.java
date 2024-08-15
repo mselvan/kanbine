@@ -21,7 +21,7 @@ public class User {
 
     private String password;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TimeCard> timeCards = new ArrayList<>();
 
     @ManyToMany

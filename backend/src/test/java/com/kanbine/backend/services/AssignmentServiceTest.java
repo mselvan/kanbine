@@ -126,10 +126,9 @@ class AssignmentServiceTest {
         when(assignmentRepository.findById(1L)).thenReturn(Optional.of(assignment));
         when(assignmentMapper.toAssignmentResponse(assignment)).thenReturn(assignmentResponse);
 
-        Optional<AssignmentResponse> foundAssignment = assignmentService.getAssignmentById(1L);
+        AssignmentResponse foundAssignment = assignmentService.getAssignmentById(1L);
 
-        assertTrue(foundAssignment.isPresent());
-        assertEquals(assignment.getName(), foundAssignment.get().getName());
+        assertEquals(assignment.getName(), foundAssignment.getName());
 
         verify(assignmentRepository, times(1)).findById(1L);
         verify(assignmentMapper, times(1)).toAssignmentResponse(assignment);

@@ -4,6 +4,7 @@ import com.kanbine.backend.dto.request.UserRequest;
 import com.kanbine.backend.dto.response.UserResponse;
 import com.kanbine.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,33 +30,36 @@ public class UserController {
     /**
      * Retrieves a list of all users.
      *
-     * @return a list of {@link UserResponse} objects representing all users.
+     * @return a {@link ResponseEntity} containing the list of {@link UserResponse} objects representing all users.
      */
     @GetMapping
-    public List<UserResponse> getAllUsers() {
-        return userService.getAllUsers();
+    public ResponseEntity<List<UserResponse>> getAllUsers() {
+        List<UserResponse> userResponseList = userService.getAllUsers();
+        return ResponseEntity.ok().body(userResponseList);
     }
 
     /**
      * Creates a new user.
      *
      * @param userRequest the {@link UserRequest} object containing the user details.
-     * @return the created {@link UserResponse} object.
+     * @return a {@link ResponseEntity} containing the created {@link UserResponse} object.
      */
     @PostMapping
-    public UserResponse createUser(@RequestBody UserRequest userRequest) {
-        return userService.saveUser(userRequest);
+    public ResponseEntity<UserResponse> createUser(@RequestBody UserRequest userRequest) {
+        UserResponse userResponse = userService.saveUser(userRequest);
+        return ResponseEntity.ok().body(userResponse);
     }
 
     /**
      * Retrieves a user by their ID.
      *
      * @param id the ID of the user to retrieve.
-     * @return an {@link Optional} containing the {@link UserResponse} object if found, otherwise empty.
+     * @return a {@link ResponseEntity} containing the {@link UserResponse} object if found, otherwise empty.
      */
     @GetMapping("/{id}")
-    public Optional<UserResponse> getUserById(@PathVariable Long id) {
-        return userService.getUserById(id);
+    public ResponseEntity<UserResponse> getUserById(@PathVariable Long id) {
+        UserResponse userResponse = userService.getUserById(id);
+        return ResponseEntity.ok(userResponse);
     }
 
     /**
@@ -73,10 +77,11 @@ public class UserController {
      *
      * @param userId the ID of the user to assign the assignment to.
      * @param assignmentId the ID of the assignment to assign.
-     * @return the updated {@link UserResponse} object.
+     * @return a {@link ResponseEntity} containing the updated {@link UserResponse} object.
      */
     @PostMapping("/{userId}/assignments/{assignmentId}")
-    public UserResponse assignAssignmentToUser(@PathVariable Long userId, @PathVariable Long assignmentId) {
-        return userService.assignAssignmentToUser(userId, assignmentId);
+    public ResponseEntity<UserResponse> assignAssignmentToUser(@PathVariable Long userId, @PathVariable Long assignmentId) {
+        UserResponse userResponse = userService.assignAssignmentToUser(userId, assignmentId);
+        return ResponseEntity.ok(userResponse);
     }
 }
