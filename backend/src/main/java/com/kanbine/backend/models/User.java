@@ -9,6 +9,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -18,10 +19,12 @@ import java.util.Set;
 
 /**
  * Entity representing a user in the system.
- * A user has an email, password, and is associated with a list of assignments and time cards.
+ * A user has an email, password, and is associated with a list of assignments
+ * and time cards.
  */
 @Data
 @Entity
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

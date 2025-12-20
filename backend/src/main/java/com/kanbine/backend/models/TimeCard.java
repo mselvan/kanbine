@@ -9,11 +9,13 @@ import java.time.LocalDateTime;
 
 /**
  * Entity representing a time card in the system.
- * A time card tracks the start and end time of work done by a user on an assignment.
+ * A time card tracks the start and end time of work done by a user on an
+ * assignment.
  * The start and end times must be within the same 10-minute block.
  */
 @Data
 @Entity
+@Table(name = "time_cards")
 public class TimeCard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +36,8 @@ public class TimeCard {
     private LocalDateTime endTime;
 
     /**
-     * Validates that the start time and end time are within the same 10-minute block.
+     * Validates that the start time and end time are within the same 10-minute
+     * block.
      * Throws an IllegalArgumentException if the validation fails.
      */
     @PrePersist

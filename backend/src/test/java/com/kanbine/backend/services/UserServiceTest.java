@@ -164,7 +164,7 @@ class UserServiceTest {
 
         assertNotNull(result);
         assertEquals("test@example.com", result.getEmail());
-        assertTrue(user.getAssignments().contains(assignment));
+        assertTrue(user.getUserAssignments().contains(assignment));
 
         verify(userRepository, times(1)).findById(1L);
         verify(assignmentRepository, times(1)).findById(1L);
