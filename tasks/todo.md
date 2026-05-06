@@ -17,5 +17,6 @@
 - Added `docs/specs/Prod3_Kanbine_Strategic_Vision_Spec.md` for strategic direction.
 - Added `docs/specs/Prod2_Kanbine_Microservices_High_Level_Design_Spec.md` for tactical architecture migration.
 - Reclassified implementation snapshot as `docs/specs/Prod1_Kanbine_Implementation_Design_Spec.md`.
-- Updated `docs/specs/Prod2_Kanbine_Functional_Spec.md` to reference migration direction artifacts.
+- Updated `docs/specs/Prod1_Kanbine_Implementation_Design_Spec.md` to reference migration direction artifacts.
 - Updated `README.md` with a documentation index for specs and ADRs.
+- Documented deployment/testing environment strategy: Docker Desktop for local development, Testcontainers for dependency-realistic integration checks, and Ubuntu single-node MicroK8s for integration/QA.

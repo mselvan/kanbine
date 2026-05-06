@@ -22,6 +22,12 @@ Kanbine is a time tracking application designed to help users manage and track t
   - `docs/adrs/adr_0003.md`
   - `docs/adrs/adr_0004.md`
 
+## Environment Strategy
+
+- Local development: Docker Desktop.
+- Integration and QA: Ubuntu single-node MicroK8s cluster.
+- Integration test dependencies: Testcontainers for deterministic ephemeral infrastructure in CI/local runs.
+
 ## Features
 
 - User authentication and management

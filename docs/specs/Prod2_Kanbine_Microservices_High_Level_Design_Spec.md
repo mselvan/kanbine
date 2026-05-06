@@ -77,6 +77,7 @@ Key baseline constraints:
 - API Gateway as single external ingress.
 - Service-to-service communication over mTLS-enabled internal network.
 - Kubernetes-based deployment model (or equivalent orchestration platform with parity controls).
+- QA/integration target environment is a single-node Ubuntu MicroK8s cluster.
 
 ### Security
 - OIDC-compatible identity flow, JWT access tokens, key rotation.
@@ -94,6 +95,8 @@ Key baseline constraints:
 - Trunk-based development with protected main branch.
 - CI stages: lint/test/build/SCA/SAST/container scan/contract tests.
 - Progressive delivery (canary or blue/green) with rollback playbooks.
+- Local developer environment uses Docker Desktop for containerized workflows.
+- Integration and QA automation use Testcontainers where service-level ephemeral dependencies are required.
 
 ---
 
@@ -125,11 +128,13 @@ Data migration principles:
 ### Phase 1 - Platform Foundation
 - Stand up gateway, telemetry, secrets, CI/CD templates, and policy gates.
 - Provide golden service template for new microservices.
+- Establish deploy/test pipeline path to the MicroK8s QA cluster.
 
 **Exit Criteria**
 - One service scaffold deployable through full pipeline.
 - Logging/metrics/tracing visible end-to-end.
 - Security checks blocking non-compliant builds.
+- MicroK8s QA deployment smoke tests and integration tests pass.
 
 ### Phase 2 - First Service Extraction (Assignment)
 - Extract assignment APIs behind gateway routing.
@@ -223,3 +228,20 @@ Ownership model:
 - `docs/adrs/adr_0002.md`
 - `docs/adrs/adr_0003.md`
 - `docs/adrs/adr_0004.md`
+
+## 12) Environment and Test Strategy
+
+### Local Development
+- Runtime: Docker Desktop.
+- Service testing: unit tests + focused integration tests with Testcontainers.
+- Goal: fast feedback and deterministic dependency startup during development.
+
+### Integration and QA
+- Runtime: single-node Ubuntu MicroK8s cluster.
+- Test scope: integration, API contract, smoke, and QA regression suites.
+- Goal: Kubernetes deployment validation before promotion to higher environments.
+
+### CI Guidance
+- Keep Testcontainers-enabled tests in CI for dependency-realistic checks.
+- Use environment-parity manifests/charts so MicroK8s and higher environments differ only by configuration.
+
