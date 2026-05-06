@@ -1,4 +1,3 @@
-
 # Kanbine Time Tracker
 
 Kanbine is a time tracking application designed to help users manage and track their time across various projects and assignments.
@@ -11,6 +10,16 @@ Kanbine is a time tracking application designed to help users manage and track t
 - [Running the Application](#running-the-application)
 - [Contributing](#contributing)
 - [License](#license)
+
+## Documentation
+
+- Functional baseline spec: `docs/specs/Prod2_Kanbine_Functional_Spec.md`
+- DDD microservices migration plan: `docs/specs/Prod3_Kanbine_DDD_Microservices_Migration_Spec.md`
+- ADRs:
+  - `docs/adrs/adr_0001.md`
+  - `docs/adrs/adr_0002.md`
+  - `docs/adrs/adr_0003.md`
+  - `docs/adrs/adr_0004.md`
 
 ## Features
 
