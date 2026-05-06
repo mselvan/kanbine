@@ -94,7 +94,7 @@ Deliver a production-grade, secure, and scalable time intelligence platform that
 The tactical architecture plan is documented in `docs/specs/Prod2_Kanbine_Microservices_High_Level_Design_Spec.md`.
 
 ### Environment Strategy Alignment
-- Local developer productivity is optimized with Docker Desktop and Testcontainers-backed integration checks.
+- Local developer productivity is optimized with Docker Desktop and Testcontainers for local dependency-realistic checks.
 - Integration and QA readiness are validated on the Ubuntu single-node MicroK8s cluster before broader rollout.
 - Higher-environment Kubernetes deployment strategy should preserve manifest/chart parity with the QA baseline.
 

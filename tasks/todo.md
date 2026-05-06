@@ -19,4 +19,4 @@
 - Reclassified implementation snapshot as `docs/specs/Prod1_Kanbine_Implementation_Design_Spec.md`.
 - Updated `docs/specs/Prod1_Kanbine_Implementation_Design_Spec.md` to reference migration direction artifacts.
 - Updated `README.md` with a documentation index for specs and ADRs.
-- Documented deployment/testing environment strategy: Docker Desktop for local development, Testcontainers for dependency-realistic integration checks, and Ubuntu single-node MicroK8s for integration/QA.
+- Documented deployment/testing environment strategy: Docker Desktop for local development, Testcontainers for local dependency-realistic checks, and Ubuntu single-node MicroK8s for integration/QA.

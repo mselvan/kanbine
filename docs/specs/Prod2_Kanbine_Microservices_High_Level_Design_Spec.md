@@ -96,7 +96,7 @@ Key baseline constraints:
 - CI stages: lint/test/build/SCA/SAST/container scan/contract tests.
 - Progressive delivery (canary or blue/green) with rollback playbooks.
 - Local developer environment uses Docker Desktop for containerized workflows.
-- Integration and QA automation use Testcontainers where service-level ephemeral dependencies are required.
+- Testcontainers are used for local developer dependency-realistic testing only.
 
 ---
 
@@ -233,7 +233,7 @@ Ownership model:
 
 ### Local Development
 - Runtime: Docker Desktop.
-- Service testing: unit tests + focused integration tests with Testcontainers.
+- Service testing: unit tests + focused local integration tests with Testcontainers.
 - Goal: fast feedback and deterministic dependency startup during development.
 
 ### Integration and QA
@@ -242,6 +242,6 @@ Ownership model:
 - Goal: Kubernetes deployment validation before promotion to higher environments.
 
 ### CI Guidance
-- Keep Testcontainers-enabled tests in CI for dependency-realistic checks.
+- Run unit and contract checks in CI, and run integration/QA suites on MicroK8s.
 - Use environment-parity manifests/charts so MicroK8s and higher environments differ only by configuration.
 
