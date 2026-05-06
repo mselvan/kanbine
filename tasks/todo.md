@@ -14,7 +14,8 @@
 - Result: 14 tests run, 3 failed (`TimeCardServiceTest.testSaveTimeCard`, `UserServiceTest.testSaveUser`, `UserServiceTest.testAssignAssignmentToUser`).
 - Spec now explicitly calls out test reliability and auth lookup inefficiency as known risks/follow-up items.
 - Applied readability cleanup: replaced list-heavy table sections in Context (`Customer-focused CIV Problems`, `Product-focused CIV Problems`, `Inputs, Outputs, Controls`, `Core Functions`) with heading + bullet format while keeping requirements tables unchanged.
-- Added `docs/specs/Prod3_Kanbine_DDD_Microservices_Migration_Spec.md` with phased production migration strategy, platform controls, data strategy, and phase exit criteria.
-- Added `docs/adrs/adr_0004.md` to formalize DDD microservices adoption via strangler migration.
+- Added `docs/specs/Prod3_Kanbine_Strategic_Vision_Spec.md` for strategic direction.
+- Added `docs/specs/Prod2_Kanbine_Microservices_High_Level_Design_Spec.md` for tactical architecture migration.
+- Reclassified implementation snapshot as `docs/specs/Prod1_Kanbine_Implementation_Design_Spec.md`.
 - Updated `docs/specs/Prod2_Kanbine_Functional_Spec.md` to reference migration direction artifacts.
 - Updated `README.md` with a documentation index for specs and ADRs.

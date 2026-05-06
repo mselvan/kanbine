@@ -1,5 +1,5 @@
 # Kanbine | Time Tracking Backend
-# Prod2 Functional Spec (Current Implementation Snapshot)
+# Prod1 Low-Level Design (Current Implementation Snapshot)
 
 ---
 
@@ -12,7 +12,7 @@
 | **Business SME** | N/A |
 | **Technical SME** | N/A |
 | **Input Data (including Interviews)** | `README.md`, backend source code, ADRs 0001-0003 |
-| **Related Specs** | `docs/adrs/adr_0001.md`, `docs/adrs/adr_0002.md`, `docs/adrs/adr_0003.md`, `docs/adrs/adr_0004.md`, `docs/specs/Prod3_Kanbine_DDD_Microservices_Migration_Spec.md` |
+| **Related Specs** | `docs/adrs/adr_0001.md`, `docs/adrs/adr_0002.md`, `docs/adrs/adr_0003.md`, `docs/adrs/adr_0004.md`, `docs/specs/Prod2_Kanbine_Microservices_High_Level_Design_Spec.md`, `docs/specs/Prod3_Kanbine_Strategic_Vision_Spec.md` |
 | **Scope Survey** | N/A (no separate survey teardown doc linked in repo) |
 | **Pre Mortem** | Most likely rejection reason: missing product/business metrics and external stakeholder sign-off details. |
 | **Previous Published Version** | None |
@@ -37,7 +37,7 @@ The existing spec file was still in template form and did not represent the curr
 - Data seeding exists for local/demo environments under the `seed` profile.
 
 #### 1-sentence Goal
-Provide an accurate, implementation-backed Prod2 spec for the currently shipped Kanbine backend behavior.
+Provide an accurate, implementation-backed Prod1 spec for the currently shipped Kanbine backend behavior.
 
 ---
 
@@ -198,7 +198,7 @@ None.
 3. Add integration tests for protected endpoints (401 vs 200 behavior and JWT parsing).
 4. Add explicit uniqueness constraint for `users.email` if not already present at DB migration level.
 5. Define production-ready observability (error rates, auth failure metrics, p95 latency).
-6. Execute phased migration plan from `docs/specs/Prod3_Kanbine_DDD_Microservices_Migration_Spec.md`.
+6. Execute phased migration plan from `docs/specs/Prod2_Kanbine_Microservices_High_Level_Design_Spec.md`.
 
 ---
 
@@ -423,4 +423,4 @@ The backend exposes REST endpoints under `/api/**`. Auth endpoints (`/api/auth/*
 - Functional and non-functional statements in this doc are intentionally limited to behavior observed in repository code.
 - Baseline verification run executed: `backend\\gradlew.bat test --no-daemon` on 2026-05-06.
 - Current baseline status: 14 tests run, 3 failing (`TimeCardServiceTest.testSaveTimeCard`, `UserServiceTest.testSaveUser`, `UserServiceTest.testAssignAssignmentToUser`).
-- Strategic migration direction is documented in `docs/specs/Prod3_Kanbine_DDD_Microservices_Migration_Spec.md` and `docs/adrs/adr_0004.md`.
+- Strategic migration direction is documented in `docs/specs/Prod2_Kanbine_Microservices_High_Level_Design_Spec.md`, `docs/specs/Prod3_Kanbine_Strategic_Vision_Spec.md`, and `docs/adrs/adr_0004.md`.

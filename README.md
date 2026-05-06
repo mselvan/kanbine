@@ -13,8 +13,9 @@ Kanbine is a time tracking application designed to help users manage and track t
 
 ## Documentation
 
-- Functional baseline spec: `docs/specs/Prod2_Kanbine_Functional_Spec.md`
-- DDD microservices migration plan: `docs/specs/Prod3_Kanbine_DDD_Microservices_Migration_Spec.md`
+- Prod3 (Strategic Vision): `docs/specs/Prod3_Kanbine_Strategic_Vision_Spec.md`
+- Prod2 (High-Level Design): `docs/specs/Prod2_Kanbine_Microservices_High_Level_Design_Spec.md`
+- Prod1 (Low-Level Design): `docs/specs/Prod1_Kanbine_Implementation_Design_Spec.md`
 - ADRs:
   - `docs/adrs/adr_0001.md`
   - `docs/adrs/adr_0002.md`

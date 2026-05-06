@@ -1,4 +1,4 @@
-# Kanbine | DDD Microservices Migration (Prod3)
+# Kanbine | DDD Microservices Migration (Prod2 HLD)
 
 ---
 
@@ -6,7 +6,7 @@
 
 | Field | Value |
 |---|---|
-| **Document Type** | Production migration architecture spec |
+| **Document Type** | Tactical high-level technical design |
 | **Date** | 2026-05-06 |
 | **Current State** | Spring Boot monolith (`backend`) |
 | **Target State** | DDD-aligned microservices on shared platform standards |
@@ -217,9 +217,9 @@ Ownership model:
 
 ## 11) Related Documents
 
-- `docs/specs/Prod2_Kanbine_Functional_Spec.md`
+- `docs/specs/Prod3_Kanbine_Strategic_Vision_Spec.md`
+- `docs/specs/Prod1_Kanbine_Implementation_Design_Spec.md`
 - `docs/adrs/adr_0001.md`
 - `docs/adrs/adr_0002.md`
 - `docs/adrs/adr_0003.md`
 - `docs/adrs/adr_0004.md`
-
